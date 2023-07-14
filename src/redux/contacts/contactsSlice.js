@@ -44,8 +44,8 @@ const initialContactsState = {
   error: null,
 };
 
-const tasksSlice = createSlice({
-  name: 'tasks',
+const contactsSlice = createSlice({
+  name: 'contacts',
   initialState: initialContactsState,
   extraReducers: builder =>
     builder
@@ -61,4 +61,4 @@ const tasksSlice = createSlice({
       .addCase(logOut.fulfilled, handleLogoutFulfilled),
 });
 
-export const tasksReducer = tasksSlice.reducer;
+export const contactsReducer = contactsSlice.reducer;
