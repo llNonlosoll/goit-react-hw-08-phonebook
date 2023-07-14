@@ -1,0 +1,64 @@
+import { createSlice } from '@reduxjs/toolkit';
+import { logOut } from 'redux/auth/operations';
+import { fetchContacts, addContact, deleteContact } from './operations';
+
+const handleContactsPending = state => {
+  state.isLoading = true;
+};
+
+const handleContactsRejected = (state, action) => {
+  state.isLoading = false;
+  state.error = action.payload;
+};
+
+const handleFetchContacts = (state, action) => {
+  state.isLoading = false;
+  state.error = null;
+  state.items = action.payload;
+};
+
+const handleAddContact = (state, action) => {
+  state.isLoading = false;
+  state.error = null;
+  state.items.push(action.payload);
+};
+
+const handleDeleteContact = (state, action) => {
+  state.isLoading = false;
+  state.error = null;
+  const index = state.items.findIndex(
+    contact => contact.id === action.payload.id
+  );
+  state.items.splice(index, 1);
+};
+
+const handleLogoutFulfilled = state => {
+  state.items = [];
+  state.error = null;
+  state.isLoading = false;
+};
+
+const initialContactsState = {
+  items: [],
+  isLoading: false,
+  error: null,
+};
+
+const tasksSlice = createSlice({
+  name: 'tasks',
+  initialState: initialContactsState,
+  extraReducers: builder =>
+    builder
+      .addCase(fetchContacts.pending, handleContactsPending)
+      .addCase(fetchContacts.fulfilled, handleFetchContacts)
+      .addCase(fetchContacts.rejected, handleContactsRejected)
+      .addCase(addContact.pending, handleContactsPending)
+      .addCase(addContact.fulfilled, handleAddContact)
+      .addCase(addContact.rejected, handleContactsRejected)
+      .addCase(deleteContact.pending, handleContactsPending)
+      .addCase(deleteContact.fulfilled, handleDeleteContact)
+      .addCase(deleteContact.rejected, handleContactsRejected)
+      .addCase(logOut.fulfilled, handleLogoutFulfilled),
+});
+
+export const tasksReducer = tasksSlice.reducer;
