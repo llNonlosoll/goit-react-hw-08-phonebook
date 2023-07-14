@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useContacts } from 'hooks/useContacts';
 import { addContact } from 'redux/contacts/operations';
 
-export const ContactForm = () => {
+export const ContactsForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
