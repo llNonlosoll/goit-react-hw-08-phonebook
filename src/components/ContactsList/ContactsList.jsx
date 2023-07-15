@@ -1,13 +1,13 @@
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { useContacts } from 'hooks/useContacts';
+import { selectFilteredContacts } from 'redux/filter/selectors';
 
 import { deleteContact } from 'redux/contacts/operations';
 
 // import { selectFilteredContacts } from 'redux/selectors';
 
 export const ContactsList = () => {
-  const { allContacts } = useContacts();
+  const filteredContacts = useSelector(selectFilteredContacts);
 
   const dispatch = useDispatch();
 
@@ -17,7 +17,7 @@ export const ContactsList = () => {
 
   return (
     <ul>
-      {allContacts.map(contact => (
+      {filteredContacts.map(contact => (
         <li key={contact.id}>
           <div>
             <p>{contact.name}: </p>
