@@ -4,16 +4,21 @@ import { selectFilteredContacts } from 'redux/filter/selectors';
 
 import { Contact } from 'components/Contact/Contact';
 
+import {
+  ContactsListStyled,
+  ContactsListItemStyled,
+} from './ContactsList.styled';
+
 export const ContactsList = () => {
   const filteredContacts = useSelector(selectFilteredContacts);
 
   return (
-    <ul>
+    <ContactsListStyled>
       {filteredContacts.map(({ id, name, number }) => (
-        <li key={id}>
+        <ContactsListItemStyled key={id}>
           <Contact id={id} name={name} number={number}></Contact>
-        </li>
+        </ContactsListItemStyled>
       ))}
-    </ul>
+    </ContactsListStyled>
   );
 };

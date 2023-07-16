@@ -2,12 +2,28 @@ import { useState } from 'react';
 
 import { useDispatch } from 'react-redux';
 
+import { useContacts } from 'hooks/useContacts';
+
 import { deleteContact, editContact } from 'redux/contacts/operations';
+
+import {
+  ContactContainerStyled,
+  ContactTextContainerStyled,
+  ContactTextStyled,
+  ContactButtonContainerStyled,
+  ContactButtonStyled,
+  EditContactFormStyled,
+  EditContactFormLabelStyled,
+  EditContactFormInputStyled,
+  EditContactButtonContainer,
+} from './Contact.styled';
 
 export const Contact = ({ id, name, number }) => {
   const [formVisible, setFormVisible] = useState(false);
 
   const dispatch = useDispatch();
+
+  const { allContacts } = useContacts();
 
   const handleContactDelete = id => {
     dispatch(deleteContact(id));
@@ -16,6 +32,16 @@ export const Contact = ({ id, name, number }) => {
   const handleContactEdit = event => {
     event.preventDefault();
     const form = event.target;
+
+    const isInContacts = allContacts.some(
+      ({ name }) =>
+        name.toLowerCase() === form.elements.name.value.toLowerCase()
+    );
+
+    if (isInContacts) {
+      alert(`${form.elements.name.value} is already in contacts`);
+      return;
+    }
 
     const name = form.elements.name.value;
     const number = form.elements.number.value;
@@ -32,30 +58,36 @@ export const Contact = ({ id, name, number }) => {
   };
 
   return (
-    <div>
-      <div>
-        <p>{name}: </p>
-        <p>{number}</p>
-      </div>
-      <button
-        type="button"
-        name="delete"
-        onClick={() => handleContactDelete(id)}
-      >
-        Delete
-      </button>
-      <button
-        type="button"
-        name="edit"
-        onClick={() => handleEditFormVisible(id)}
-      >
-        {formVisible ? 'Close' : 'Edit Contact'}
-      </button>
+    <>
+      <ContactContainerStyled>
+        <ContactTextContainerStyled>
+          <ContactTextStyled>{name}: </ContactTextStyled>
+          <ContactTextStyled>{number}</ContactTextStyled>
+        </ContactTextContainerStyled>
+        {!formVisible && (
+          <ContactButtonContainerStyled>
+            <ContactButtonStyled
+              type="button"
+              name="edit"
+              onClick={() => handleEditFormVisible(id)}
+            >
+              Edit
+            </ContactButtonStyled>
+            <ContactButtonStyled
+              type="button"
+              name="delete"
+              onClick={() => handleContactDelete(id)}
+            >
+              Delete
+            </ContactButtonStyled>
+          </ContactButtonContainerStyled>
+        )}
+      </ContactContainerStyled>
       {formVisible && (
-        <form onSubmit={handleContactEdit}>
-          <label htmlFor="name">
+        <EditContactFormStyled onSubmit={handleContactEdit}>
+          <EditContactFormLabelStyled htmlFor="name">
             Name
-            <input
+            <EditContactFormInputStyled
               id="name"
               type="text"
               name="name"
@@ -63,10 +95,10 @@ export const Contact = ({ id, name, number }) => {
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
               required
             />
-          </label>
-          <label htmlFor="number">
+          </EditContactFormLabelStyled>
+          <EditContactFormLabelStyled htmlFor="number">
             Number
-            <input
+            <EditContactFormInputStyled
               id="number"
               type="tel"
               name="number"
@@ -74,10 +106,19 @@ export const Contact = ({ id, name, number }) => {
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               required
             />
-          </label>
-          <button type="submit">Edit Contact</button>
-        </form>
+          </EditContactFormLabelStyled>
+          <EditContactButtonContainer>
+            <ContactButtonStyled
+              type="button"
+              name="cancel"
+              onClick={() => handleEditFormVisible(id)}
+            >
+              Cancel
+            </ContactButtonStyled>
+            <ContactButtonStyled type="submit">Edit</ContactButtonStyled>
+          </EditContactButtonContainer>
+        </EditContactFormStyled>
       )}
-    </div>
+    </>
   );
 };

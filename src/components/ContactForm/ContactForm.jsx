@@ -2,6 +2,14 @@ import { useDispatch } from 'react-redux';
 import { useContacts } from 'hooks/useContacts';
 import { addContact } from 'redux/contacts/operations';
 
+import {
+  ContactFormStyled,
+  ContactFormTextStyled,
+  ContactFormLabelStyled,
+  ContactFormInputStyled,
+  ContactFormButtonStyled,
+} from './ContactForm.styled';
+
 export const ContactForm = () => {
   const dispatch = useDispatch();
 
@@ -30,10 +38,13 @@ export const ContactForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="name">
+    <ContactFormStyled onSubmit={handleSubmit}>
+      <ContactFormTextStyled>
+        Add Contact to your Phonebook
+      </ContactFormTextStyled>
+      <ContactFormLabelStyled htmlFor="name">
         Name
-        <input
+        <ContactFormInputStyled
           id="name"
           type="text"
           name="name"
@@ -41,10 +52,10 @@ export const ContactForm = () => {
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
         />
-      </label>
-      <label htmlFor="number">
+      </ContactFormLabelStyled>
+      <ContactFormLabelStyled htmlFor="number">
         Number
-        <input
+        <ContactFormInputStyled
           id="number"
           type="tel"
           name="number"
@@ -52,8 +63,10 @@ export const ContactForm = () => {
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
         />
-      </label>
-      <button type="submit">Add Contact</button>
-    </form>
+      </ContactFormLabelStyled>
+      <ContactFormButtonStyled type="submit">
+        Add Contact
+      </ContactFormButtonStyled>
+    </ContactFormStyled>
   );
 };
