@@ -1,6 +1,8 @@
+// Redux's useDispatch hook
 import { useDispatch } from 'react-redux';
+// Operation for registering a user
 import { register } from 'redux/auth/operations';
-
+// Styled components for the RegisterForm component
 import {
   RegisterFormStyled,
   RegisterFormLabelStyled,
@@ -9,11 +11,15 @@ import {
 } from './RegisterForm.styled';
 
 export const RegisterForm = () => {
+  // Redux's useDispatch hook
   const dispatch = useDispatch();
 
+  // handleSubmit function
   const handleSubmit = event => {
     event.preventDefault();
     const form = event.currentTarget;
+
+    // Dispatch the register operation with the name, email, and password values
     dispatch(
       register({
         name: form.elements.name.value,
@@ -21,6 +27,8 @@ export const RegisterForm = () => {
         password: form.elements.password.value,
       })
     );
+
+    // Form reset
     form.reset();
   };
 

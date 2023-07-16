@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-export const Wrapper = styled.div``;
+export const AuthNavContainerStyled = styled.div`
+  display: flex;
+  gap: 10px;
+`;
 
 export const NavLinkStyled = styled(NavLink)`
   display: inline-block;

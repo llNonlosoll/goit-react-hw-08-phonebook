@@ -1,7 +1,10 @@
+// Redux's useDispatch hook
 import { useDispatch } from 'react-redux';
+// Custom hook for accessing contacts
 import { useContacts } from 'hooks/useContacts';
+// operation for adding contacts
 import { addContact } from 'redux/contacts/operations';
-
+// Styled components for the ContactForm component
 import {
   ContactFormStyled,
   ContactFormTextStyled,
@@ -11,10 +14,13 @@ import {
 } from './ContactForm.styled';
 
 export const ContactForm = () => {
+  // Redux's useDispatch hook
   const dispatch = useDispatch();
 
+  // Custom hook for accessing contacts from the Redux store
   const { allContacts } = useContacts();
 
+  // handleSubmit function
   const handleSubmit = event => {
     event.preventDefault();
     const form = event.target;
@@ -32,8 +38,10 @@ export const ContactForm = () => {
     const name = form.elements.name.value;
     const number = form.elements.number.value;
 
+    // Dispatch the addContact action
     dispatch(addContact({ name, number }));
 
+    // Form reset
     form.reset();
   };
 

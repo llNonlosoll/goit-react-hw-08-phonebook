@@ -1,11 +1,12 @@
+// React's useState hook
 import { useState } from 'react';
-
+// Redux's useDispatch hook
 import { useDispatch } from 'react-redux';
-
+// Custom hook for accessing contacts
 import { useContacts } from 'hooks/useContacts';
-
+// operations for deleting and editing contacts
 import { deleteContact, editContact } from 'redux/contacts/operations';
-
+// Styled components for the Contact component
 import {
   ContactContainerStyled,
   ContactTextContainerStyled,
@@ -19,16 +20,21 @@ import {
 } from './Contact.styled';
 
 export const Contact = ({ id, name, number }) => {
+  // State for controlling the visibility of the edit form
   const [formVisible, setFormVisible] = useState(false);
 
+  // Redux's useDispatch hook
   const dispatch = useDispatch();
 
+  // Custom hook for accessing contacts from the Redux store
   const { allContacts } = useContacts();
 
+  // Dispatch the deleteContact action
   const handleContactDelete = id => {
     dispatch(deleteContact(id));
   };
 
+  // EditContact function
   const handleContactEdit = event => {
     event.preventDefault();
     const form = event.target;
@@ -46,13 +52,17 @@ export const Contact = ({ id, name, number }) => {
     const name = form.elements.name.value;
     const number = form.elements.number.value;
 
+    // Dispatch the editContact action
     dispatch(editContact({ id, name, number }));
 
+    // Form reset
     form.reset();
 
+    // Toggle the visibility of the edit form
     setFormVisible(!formVisible);
   };
 
+  // Toggle the visibility of the edit form
   const handleEditFormVisible = () => {
     setFormVisible(!formVisible);
   };
