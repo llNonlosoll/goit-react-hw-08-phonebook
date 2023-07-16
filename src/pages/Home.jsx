@@ -15,12 +15,7 @@ const styles = {
 export default function Home() {
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>
-        Phone book welcome page{' '}
-        <span role="img" aria-label="Greeting icon">
-          💁‍♀️
-        </span>
-      </h1>
+      <h1 style={styles.title}>Welcome to Phonebook! </h1>
     </div>
   );
 }
